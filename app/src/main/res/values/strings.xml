@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">VictorCapstoneProject</string>
+    <string name="image_splash_screen">image_splash_screen</string>
+    <string name="image_login">image_login</string>
+    <string name="login">Login</string>
+    <string name="btn_login">Login</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="doesn_t_have_an_account_yet">Doesn’t have an account yet?</string>
+</resources>
