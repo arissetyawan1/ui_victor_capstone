@@ -6,8 +6,20 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="grey">#575757</color>
+    <color name="lightGrey">#9A9A9A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sky_blue">#D9F4FF</color>
     <color name="sky_blue_1">#80DAFF</color>
     <color name="sky_blue_2">#67B3D2</color>
+
+    <array name="array_dot_active">
+        <item>@color/sky_blue_2</item>
+        <item>@color/sky_blue_2</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/lightGrey</item>
+        <item>@color/lightGrey</item>
+    </array>
 </resources>
