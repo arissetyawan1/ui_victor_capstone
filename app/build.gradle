@@ -53,6 +53,19 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "androidx.activity:activity-ktx:1.2.3"
 
+    //Retrofit
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+
+    //Dagger
+    implementation 'com.google.dagger:dagger:2.36'
+    implementation 'com.google.dagger:dagger-android-support:2.36'
+    kapt 'com.google.dagger:dagger-compiler:2.36'
+    kapt 'com.google.dagger:dagger-android-processor:2.36'
+
     //LottieAnimation
     implementation "com.airbnb.android:lottie:3.6.1"
 

@@ -1,70 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
+    android:id="@+id/item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
 
-    <RelativeLayout
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvMessageVictor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/view"
+        app:cardBackgroundColor="@color/sky_blue_2"
+        app:cardCornerRadius="5dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMessageVictor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Hello bro?"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvMessageUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/sky_blue_2"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            app:cardBackgroundColor="@color/sky_blue_2"
-            app:cardCornerRadius="5dp">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMessageUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Hello bro?"
+                android:textColor="@color/white"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvMessageName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="Abdullah Fahmi"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+        </RelativeLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvMessage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="Hello bro?"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tvMessageName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+    </com.google.android.material.card.MaterialCardView>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/roboto_thin"
-                    android:text="15:13"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@id/tvMessage"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
