@@ -1,39 +1,41 @@
 package com.android.victor.ui.intro
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.PagerAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import com.android.victor.R
+import com.android.victor.model.SlideModel
+import com.bumptech.glide.Glide
+import com.smarteist.autoimageslider.SliderViewAdapter
 
-class IntroAdapter(private var layouts: Array<Int>, var context: Context) : PagerAdapter() {
+class IntroAdapter(private var items: ArrayList<SlideModel>): SliderViewAdapter<IntroAdapter.SliderVH>() {
 
-    fun updateLayout(layouts: Array<Int>){
-        this.layouts = layouts
+    fun updateImage(item: ArrayList<SlideModel>) {
+        items.clear()
+        items.addAll(item)
         notifyDataSetChanged()
     }
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view: View = LayoutInflater.from(container.context).inflate(
-            layouts[position],
-            container,
-            false
-        )
-        container.addView(view, 0)
-        return view
+    override fun onCreateViewHolder(parent: ViewGroup?) = SliderVH(
+        LayoutInflater.from(parent?.context).inflate(R.layout.item_slider_view, parent, false)
+    )
+
+    override fun getCount() = items.size
+
+    override fun onBindViewHolder(viewHolder: SliderVH, position: Int) {
+        viewHolder.bind(items[position])
     }
 
-    override fun getCount(): Int {
-        return layouts.size
-    }
-
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view === obj
-    }
-
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        super.destroyItem(container, position, `object`)
-        val view = `object` as View?
-        container.removeView(view)
+    class SliderVH(itemView: View) : SliderViewAdapter.ViewHolder(itemView) {
+        private val image = itemView.findViewById<ImageView>(R.id.iv_auto_image_slider)
+        private val title = itemView.findViewById<TextView>(R.id.tv_title)
+        private val description = itemView.findViewById<TextView>(R.id.tv_description)
+        fun bind(item: SlideModel) {
+            title.text = item.title
+            description.text = item.description
+            Glide.with(itemView.context).load(item.image).into(image)
+        }
     }
 }

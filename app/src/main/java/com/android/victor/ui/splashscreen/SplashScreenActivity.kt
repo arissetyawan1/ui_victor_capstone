@@ -1,11 +1,10 @@
-package com.android.victor.ui
+package com.android.victor.ui.splashscreen
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
-import com.android.victor.R
 import com.android.victor.databinding.ActivitySplashScreenBinding
 
 @Suppress("DEPRECATION")

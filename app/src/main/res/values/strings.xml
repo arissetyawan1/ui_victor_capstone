@@ -14,8 +14,10 @@
     <string name="password_confirmation">Password Confirmation</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
-    <string name="title_slide_1">CHAT TO THE VICTOR</string>
-    <string name="title_slide_2">LET’S CHECK YOUR HEALTH WITH VICTOR</string>
+    <string name="title_slide_1">Chat to The Victor</string>
+    <string name="title_slide_2">Check Your Health with Victor</string>
     <string name="desc_slide_1">Share your symptoms with Victor and he will give you advice</string>
     <string name="desc_slide_2">Victor will help you to deal with your health problems</string>
+    <string name="register">Register</string>
+    <string name="send_message">Send message...</string>
 </resources>

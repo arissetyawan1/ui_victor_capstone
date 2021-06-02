@@ -2,20 +2,17 @@ package com.android.victor.ui.intro
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.view.View
-import android.view.WindowManager
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
 import com.android.victor.R
 import com.android.victor.databinding.ActivityIntroBinding
+import com.android.victor.model.SlideModel
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 
-class IntroActivity: AppCompatActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
+class IntroActivity: AppCompatActivity(), View.OnClickListener {
 
-    private var layouts = arrayOf<Int>()
-    private var dots = arrayOf<TextView>()
+    private var itemSlider: ArrayList<SlideModel> = arrayListOf()
 
     private lateinit var adapter: IntroAdapter
     private lateinit var b: ActivityIntroBinding
@@ -25,89 +22,50 @@ class IntroActivity: AppCompatActivity(), View.OnClickListener, ViewPager.OnPage
         b = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(b.root)
         initiate()
-        addLayout()
-        setAdapterSlider()
-        setListener()
+        addSliderItem()
+        setClickListener()
     }
 
     private fun initiate() {
-        adapter = IntroAdapter(layouts, this)
+        adapter = IntroAdapter(arrayListOf())
     }
 
-    private fun addLayout() {
-        layouts = arrayOf(
-            R.layout.item_slide_1,
-            R.layout.item_slide_2
-        )
-        adapter.updateLayout(layouts)
-        addBottomDots(0)
-        changeStatusBarColor()
+    private fun addSliderItem() {
+        itemSlider.add(SlideModel(R.drawable.intro_image_1, resources.getString(R.string.title_slide_1), resources.getString(R.string.desc_slide_1)))
+        itemSlider.add(SlideModel(R.drawable.intro_image_2, resources.getString(R.string.title_slide_2), resources.getString(R.string.desc_slide_2)))
+        adapter.updateImage(itemSlider)
+        setSliderView()
     }
 
-    private fun setAdapterSlider() {
-        b.viewPager.adapter = adapter
-        b.viewPager.addOnPageChangeListener(this)
+    private fun setSliderView() {
+        b.imageSlider.setSliderAdapter(adapter)
+        b.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        b.imageSlider.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_RIGHT
+        b.imageSlider.indicatorSelectedColor = Color.DKGRAY
+        b.imageSlider.indicatorUnselectedColor = Color.GRAY
+        b.imageSlider.scrollTimeInSec = 3
+        b.imageSlider.isAutoCycle = true
     }
 
-    private fun setListener() {
-        b.btnSkip.setOnClickListener(this)
-        b.btnNext.setOnClickListener(this)
+    private fun setClickListener() {
+        b.btnLogin.setOnClickListener(this)
+        b.btnRegister.setOnClickListener(this)
     }
 
-    private fun addBottomDots(currentPage: Int){
-        val colorsActive = resources.getIntArray(R.array.array_dot_active)
-        val colorsInactive = resources.getIntArray(R.array.array_dot_inactive)
-        b.layoutDots.removeAllViews()
-        for (i in dots.indices) {
-            dots[i] = TextView(this)
-            dots[i].text = Html.fromHtml("&#8226;")
-            dots[i].textSize = 35f
-            dots[i].setTextColor(colorsInactive[currentPage])
-            b.layoutDots.addView(dots[i])
-        }
-        if (dots.isNotEmpty()) {
-            dots[currentPage].setTextColor(colorsActive[currentPage])
-        }
+    private fun login() {
+//        val login = Intent(this, LoginActivity::class.java)
+//        startActivity(login)
     }
 
-    private fun getItem(i: Int): Int {
-        return b.viewPager.currentItem + i
-    }
-
-    private fun changeStatusBarColor() {
-        val window = window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
+    private fun category() {
+//        val category = Intent(this, CategoryActivity::class.java)
+//        startActivity(category)
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btnSkip -> {
-                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            R.id.btnNext -> {
-                val current = getItem(+1)
-                if (current < layouts.size) {
-                    b.viewPager.currentItem = current
-                } else {
-                    Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
+        when(v?.id){
+            R.id.btn_login -> login()
+            R.id.btn_register -> category()
         }
     }
-
-    override fun onPageSelected(position: Int) {
-        addBottomDots(position)
-        if (position == layouts.size - 1) {
-            b.btnNext.text = getString(R.string.next)
-            b.btnSkip.visibility = View.GONE
-        } else {
-            b.btnNext.text = getString(R.string.next)
-            b.btnSkip.visibility = View.VISIBLE
-        }
-    }
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-    override fun onPageScrollStateChanged(state: Int) {}
 }
