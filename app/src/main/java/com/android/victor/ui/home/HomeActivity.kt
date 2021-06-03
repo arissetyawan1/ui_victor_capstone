@@ -100,7 +100,7 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
                 messageAdapter.addSingleMessage(MessageModel(messageText = "Is there anything else?", textLength = "Long"))
             }
             messageAdapter.addItemMessage(generateDataCategory())
-            b.rvMessage.smoothScrollToPosition(messageAdapter.countItemMessage())
+            smoothScroll()
         }, 1000)
     }
 
@@ -109,17 +109,18 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
     }
 
     private fun categories(message: MessageModel) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            messageAdapter.addSingleMessage(
-                MessageModel(message.messageText, "user")
-            )
-            b.rvMessage.smoothScrollToPosition(messageAdapter.countItemMessage())
-        }, 1000)
+        //Add user chat
+        messageAdapter.addSingleMessage(MessageModel(message.messageText, "user"))
+        smoothScroll()
+        //Feedback user chat
         Handler(Looper.getMainLooper()).postDelayed({
             messageAdapter.addSingleMessage(
                 MessageModel("What are your complaints about your ${message.messageId}?", "victor", textLength = "Long")
             )
-            b.rvMessage.smoothScrollToPosition(messageAdapter.countItemMessage())
+            smoothScroll()
+        }, 1000)
+        //Show detail per categories
+        Handler(Looper.getMainLooper()).postDelayed({
             when(message.messageId){
                 "body" -> messageAdapter.addItemMessage(generateDataBody())
                 "digestion" -> messageAdapter.addItemMessage(generateDataDigestion())
@@ -130,14 +131,19 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
                 "tht" -> messageAdapter.addItemMessage(generateDataTht())
                 "additional" -> messageAdapter.addItemMessage(generateDataAdditional())
             }
-        }, 1000)
+            smoothScroll()
+        }, 3000)
     }
 
     private fun addItems(message: MessageModel) {
         if (items.size <= 7){
+            messageAdapter.addSingleMessage(MessageModel(message.messageText, "user"))
+            smoothScroll()
             items.add(message.messageId)
             Log.e("TAG", "DATA : ${items.size}")
-            showCategories(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                showCategories(false)
+            }, 1000)
         } else {
             Toast.makeText(this, "You have given enough symptoms. So, click finish button below!", Toast.LENGTH_LONG).show()
             showCategories(false)
@@ -173,5 +179,9 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
                 Log.e("TAG","RESPONSE: ${t.localizedMessage}")
             }
         })
+    }
+
+    private fun smoothScroll() {
+        b.rvMessage.smoothScrollToPosition(messageAdapter.countItemMessage())
     }
 }
