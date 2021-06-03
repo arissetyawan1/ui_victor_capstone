@@ -22,6 +22,7 @@ import com.android.victor.model.Data.generateDataSkin
 import com.android.victor.model.Data.generateDataTht
 import com.android.victor.model.MessageModel
 import com.android.victor.model.PredictResponse
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -114,9 +115,15 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
         smoothScroll()
         //Feedback user chat
         Handler(Looper.getMainLooper()).postDelayed({
-            messageAdapter.addSingleMessage(
-                MessageModel("What are your complaints about your ${message.messageId}?", "victor", textLength = "Long")
-            )
+            if (message.messageId == "additional"){
+                messageAdapter.addSingleMessage(
+                    MessageModel("What are your complaints about your body?", "victor", textLength = "Long")
+                )
+            } else {
+                messageAdapter.addSingleMessage(
+                    MessageModel("What are your complaints about your ${message.messageId}?", "victor", textLength = "Long")
+                )
+            }
             smoothScroll()
         }, 1000)
         //Show detail per categories
@@ -152,21 +159,20 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
 
     private fun checkout() {
         if (items.size != 0){
-            if (items.size <= 7){
-                for(item in 1..6){
-                    items.add(item, "0")
-                }
-                postData()
-            } else {
-                postData()
+            while(items.size < 17){
+                items.add("0")
             }
+            postData()
         } else {
             Toast.makeText(this, "Choose at least one symptoms!", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun postData() {
-        usersApi.predict(items).enqueue(object : Callback<PredictResponse>{
+        val data = JSONArray(items)
+        Log.e("TAG","RESPONSE: $items")
+        Log.e("TAG","RESPONSE: $data")
+        usersApi.predict(data).enqueue(object : Callback<PredictResponse>{
             override fun onResponse(
                 call: Call<PredictResponse>,
                 response: Response<PredictResponse>

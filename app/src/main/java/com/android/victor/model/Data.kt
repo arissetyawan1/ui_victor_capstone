@@ -100,7 +100,7 @@ object Data {
         mental.add(MessageModel("Anxiexty", messageId = "Anxiexty"))
         mental.add(MessageModel("Lack Of Concentration", messageId = "lack_of_concentration"))
         mental.add(MessageModel("Visual Disturbances", messageId="visual_disturbances"))
-        mental.add(MessageModel("mood_swings", messageId = "mood_swings"))
+        mental.add(MessageModel("Mood Swings", messageId = "mood_swings"))
         mental.add(MessageModel("Depression", messageId = "depression"))
         mental.add(MessageModel("Lethargy", messageId = "lethargy"))
         mental.add(MessageModel("High Fever", messageId = "high_fever"))
