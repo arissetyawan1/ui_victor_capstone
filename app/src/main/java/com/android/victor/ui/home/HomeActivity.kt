@@ -22,6 +22,7 @@ import com.android.victor.model.Data.generateDataSkin
 import com.android.victor.model.Data.generateDataTht
 import com.android.victor.model.MessageModel
 import com.android.victor.model.PredictResponse
+import com.android.victor.model.Symptoms
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -170,13 +171,29 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
 
     private fun postData() {
         val data = JSONArray(items)
+        val symptoms = Symptoms(items)
         Log.e("TAG","RESPONSE: $items")
         Log.e("TAG","RESPONSE: $data")
-        usersApi.predict(data).enqueue(object : Callback<PredictResponse>{
+        usersApi.predict(symptoms).enqueue(object : Callback<PredictResponse>{
             override fun onResponse(
                 call: Call<PredictResponse>,
                 response: Response<PredictResponse>
             ) {
+                messageAdapter.addSingleMessage(
+                    MessageModel("Victor's Prediction: ")
+                )
+                messageAdapter.addSingleMessage(
+                    MessageModel("${response.body()?.prediction} \n ${response.body()?.desc}", textLength = "Long")
+                )
+                messageAdapter.addSingleMessage(
+                    MessageModel("Precautions: ")
+                )
+                for (i in response.body()?.precautions!!){
+                    messageAdapter.addSingleMessage(
+                        MessageModel("- $i", textLength = "Long")
+                    )
+                }
+                smoothScroll()
                 Log.e("TAG","RESPONSE: ${response.code()}")
                 Log.e("TAG","RESPONSE: ${response.message()}")
             }
