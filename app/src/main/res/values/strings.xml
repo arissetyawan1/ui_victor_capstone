@@ -20,4 +20,11 @@
     <string name="desc_slide_2">Victor will help you to deal with your health problems</string>
     <string name="register">Register</string>
     <string name="send_message">Send message...</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="register_succes">Your account has been successfully registered, please wait and check your email for verification</string>
+    <string name="victor">Victor</string>
+    <string name="logout">Logout</string>
+    <string name="wanna_logout">Do you want to log out?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">YES</string>
 </resources>

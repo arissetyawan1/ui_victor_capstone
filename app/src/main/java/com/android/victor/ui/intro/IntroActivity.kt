@@ -1,5 +1,6 @@
 package com.android.victor.ui.intro
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.victor.R
 import com.android.victor.databinding.ActivityIntroBinding
 import com.android.victor.model.SlideModel
+import com.android.victor.ui.login.LoginActivity
+import com.android.victor.ui.register.RegisterActivity
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 
@@ -53,19 +56,19 @@ class IntroActivity: AppCompatActivity(), View.OnClickListener {
     }
 
     private fun login() {
-//        val login = Intent(this, LoginActivity::class.java)
-//        startActivity(login)
+        val login = Intent(this, LoginActivity::class.java)
+        startActivity(login)
     }
 
-    private fun category() {
-//        val category = Intent(this, CategoryActivity::class.java)
-//        startActivity(category)
+    private fun register() {
+        val register = Intent(this, RegisterActivity::class.java)
+        startActivity(register)
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_login -> login()
-            R.id.btn_register -> category()
+            R.id.btn_register -> register()
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.victor.R
 import com.android.victor.api.DaggerApiComponent
 import com.android.victor.api.UsersApi
 import com.android.victor.databinding.ActivityHomeBinding
@@ -23,6 +24,7 @@ import com.android.victor.model.Data.generateDataTht
 import com.android.victor.model.MessageModel
 import com.android.victor.model.PredictResponse
 import com.android.victor.model.Symptoms
+import com.android.victor.utils.Utils.showToast
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +34,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
+class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick, View.OnClickListener {
 
     @Inject
     lateinit var usersApi: UsersApi
@@ -54,6 +56,7 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
     }
 
     private fun initiate() {
+        b.btnLogout.setOnClickListener(this)
         messageAdapter = MessageAdapter(arrayListOf())
     }
 
@@ -179,32 +182,44 @@ class HomeActivity : AppCompatActivity(), MessageAdapter.OnItemClick {
                 call: Call<PredictResponse>,
                 response: Response<PredictResponse>
             ) {
-                messageAdapter.addSingleMessage(
-                    MessageModel("Victor's Prediction: ")
-                )
-                messageAdapter.addSingleMessage(
-                    MessageModel("${response.body()?.prediction} \n ${response.body()?.desc}", textLength = "Long")
-                )
-                messageAdapter.addSingleMessage(
-                    MessageModel("Precautions: ")
-                )
-                for (i in response.body()?.precautions!!){
+                if (response.isSuccessful) {
                     messageAdapter.addSingleMessage(
-                        MessageModel("- $i", textLength = "Long")
+                        MessageModel("Victor's Prediction: ")
                     )
+                    messageAdapter.addSingleMessage(
+                        MessageModel("${response.body()?.prediction} \n ${response.body()?.desc}", textLength = "Long")
+                    )
+                    messageAdapter.addSingleMessage(
+                        MessageModel("Precautions: ")
+                    )
+                    for (i in response.body()?.precautions!!){
+                        messageAdapter.addSingleMessage(
+                            MessageModel("- $i", textLength = "Long")
+                        )
+                    }
+                    smoothScroll()
+                } else {
+                    showToast(this@HomeActivity, "The server is having problems, try again later")
                 }
-                smoothScroll()
+
                 Log.e("TAG","RESPONSE: ${response.code()}")
                 Log.e("TAG","RESPONSE: ${response.message()}")
             }
 
             override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
-                Log.e("TAG","RESPONSE: ${t.localizedMessage}")
+                showToast(this@HomeActivity, "The server is having problems, try again later")
             }
         })
     }
 
     private fun smoothScroll() {
         b.rvMessage.smoothScrollToPosition(messageAdapter.countItemMessage())
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.btnLogout){
+            val dialog = LogoutDialog()
+            dialog.show(supportFragmentManager, "DIALOG")
+        }
     }
 }

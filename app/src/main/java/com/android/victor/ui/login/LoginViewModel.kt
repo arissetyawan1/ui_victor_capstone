@@ -35,7 +35,9 @@ class LoginViewModel: ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     if (task.result?.isEmpty == true){
-                        //Show error email not registered
+                        loading.value = false
+                        errorMessage.value = "Email is not registered yet, please register first"
+                        showMessage.value = true
                     } else {
                         val data = task.result?.documents?.get(0)
                         val user = User(
@@ -63,7 +65,9 @@ class LoginViewModel: ViewModel() {
                         successSignIn.value = true
                     } else {
                         auth.signOut()
-                        //Show error email not registered
+                        loading.value = false
+                        errorMessage.value = "Your email has not been verified"
+                        showMessage.value = true
                     }
                 } else {
                     loading.value = false
@@ -71,5 +75,13 @@ class LoginViewModel: ViewModel() {
                     showMessage.value = true
                 }
             }
+    }
+
+    private fun defaultValue() {
+        successSignIn.value = false
+        loading.value = false
+        showMessage.value = false
+        errorMessage.value = ""
+        user.value = User()
     }
 }

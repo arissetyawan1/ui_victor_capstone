@@ -17,7 +17,7 @@ object Utils {
     object FirestoreKeys {
         const val COLLECTION_USER = "user"
         //USER
-        const val FIELD_NAME = "fullName"
+        const val FIELD_NAME = "name"
         const val FIELD_EMAIL = "email"
         const val FIELD_PHONE = "phone"
     }
