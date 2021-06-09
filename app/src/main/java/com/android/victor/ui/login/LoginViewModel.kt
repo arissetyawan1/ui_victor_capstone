@@ -26,6 +26,7 @@ class LoginViewModel: ViewModel() {
     var successSignIn = MutableLiveData<Boolean>()
 
     fun checkEmailInUser(email: String, password: String) {
+        defaultValue()
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         loading.value = true
